@@ -8,11 +8,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -57,10 +59,18 @@ public class App {
     txtNama.setBounds(20, 100, 500, 30);
     txtNama.setFont(new Font("Poppins", Font.PLAIN, 16));
 
-    JLabel password = new JLabel("Password");
-    password.setBounds(20, (int)txtNama.getLocation().getY()+45, 300, 20);
-    password.setFont(new Font("Poppins Medium", Font.PLAIN, 20 ));
+    JLabel username = new JLabel("Username");
+    username.setBounds(20, (int)txtNama.getLocation().getY()+45, 300, 20);
+    username.setFont(new Font("Poppins Medium", Font.PLAIN, 20 ));
 
+    JTextField txtUsername = new JTextField();
+    txtUsername.setBounds(20, (int)username.getLocation().getY()+30, 500, 30);
+    txtUsername.setFont(new Font("Poppins", Font.PLAIN, 16));
+    
+    JLabel password = new JLabel("Password");
+    password.setBounds(20, (int)txtUsername.getLocation().getY()+45, 300, 20);
+    password.setFont(new Font("Poppins Medium", Font.PLAIN, 20 ));
+    
     JPasswordField txtPassword = new JPasswordField();
     txtPassword.setBounds(20, (int)password.getLocation().getY()+30, 500, 30);
     txtPassword.setFont(new Font("Poppins", Font.PLAIN, 16 ));
@@ -153,6 +163,91 @@ public class App {
     btnSubmit.setForeground( Color.WHITE );
 
 
+    // Event handling
+    // Buat objek action listener
+    // ActionListener clickButton = new ActionListener(){
+    // @Override
+    // Public void actionPerformed( ActionEvent e ){
+    // Response
+    // System.out.println("ok");
+    //  }
+    //  };
+
+
+    btnSubmit.addActionListener( new ActionListener(){
+      @Override
+      public void actionPerformed( ActionEvent ae ){
+        // getter value dari inputan
+        // getter value JTextField
+        String nama = txtNama.getText();
+        String username = txtNama.getText();
+
+        // Getter value JPasswordField
+        String password = String.valueOf(txtPassword.getPassword());
+        // Getter value JTextarea
+        String alamat = txtAlamat.getText();
+        String jk = "";
+        String hobi = "";
+        // Getter value JComboBox
+        String negara = cmbnegara.getSelectedItem().toString();
+        String pekerjaan = "";
+        
+        // Getter value JRadioButton
+        try {
+          jk = groupJK.getSelection().getActionCommand();
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog( mainWindow, "Pilih jenis kelamin", "Peringatan", JOptionPane.WARNING_MESSAGE );
+          return;
+        }
+        
+        // Cek seleksi pada JCheckbox
+        if( chFullRebahan.isSelected() ){
+          hobi += "Full Rebahan";
+        }
+        if( chEditor.isSelected() ){
+          hobi += "Editor";
+        }
+        if( chTouring.isSelected() ){
+          hobi += "Touring";
+        }
+        if( chBlogger.isSelected() ){
+          hobi += "Blogger";
+        }
+        if( chStalkingEx.isSelected() ){
+          hobi += "Stalking";
+        }
+
+        // Getter Index yang terseleksi pada JList
+        int indexSelecteds[] = lsPekerjaan.getSelectedIndices();
+        for( int i = 0; i < indexSelecteds.length; i++ ){
+          pekerjaan += lsPekerjaan.getModel().getElementAt(indexSelecteds[i]) + ",";
+        }
+        
+        
+
+        String message = 
+          "Nama : " + nama + "\n"
+          + "Username : " + username + "\n"
+          + "Password : " + password + "\n"
+          + "Alamat : " + alamat + "\n"
+          + "Jenis Kelamin : " + jk + "\n"
+          + "Hobi : " + hobi + "\n"
+          + "Negara : " + negara + "\n"
+          + "Pengalaman Pekerjaan : " + pekerjaan + "\n"
+        ;
+
+        JOptionPane.showMessageDialog(
+          mainWindow,
+          message,
+          "Hasil inputan",
+          JOptionPane.INFORMATION_MESSAGE
+        );
+
+      }
+    } );
+
+
+
 
 
 
@@ -162,6 +257,8 @@ public class App {
     content.add(title);
     content.add(nama);
     content.add(txtNama);
+    content.add(username);
+    content.add(txtUsername);
     content.add(password);
     content.add(txtPassword);
     content.add(alamat);
@@ -196,8 +293,8 @@ public class App {
 
     // Object selectedValue = JOptionPane.showInputDialog(null, "Choose one", "Input", JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[1]);
 
-    Object[] options = { "IYA", "TIDAK", "BATAL" };
-    JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+    // Object[] options = { "IYA", "TIDAK", "BATAL" };
+    // JOptionPane.showOptionDialog(null, "Click OK to continue", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 
 
